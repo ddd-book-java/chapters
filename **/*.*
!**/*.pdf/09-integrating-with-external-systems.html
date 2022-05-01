@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.16">
+<title>Integrating with External Systems</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;-webkit-tap-highlight-color:transparent}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_integrating_with_external_systems">Integrating with External Systems</a>
+<ul class="sectlevel2">
+<li><a href="#continuing-our-design-journey">Continuing our design journey</a></li>
+<li><a href="#bounded-context-relationships">Bounded context relationships</a>
+<ul class="sectlevel3">
+<li><a href="#symmetric-relationship-patterns">Symmetric relationship patterns</a></li>
+<li><a href="#asymmetric-relationship-patterns">Asymmetric relationship patterns</a></li>
+</ul>
+</li>
+<li><a href="#implementation-patterns">Implementation patterns</a>
+<ul class="sectlevel3">
+<li><a href="#data-based">Data-based</a></li>
+<li><a href="#code-based">Code-based</a></li>
+<li><a href="#ipc-based">IPC-based</a></li>
+</ul>
+</li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#questions">Questions</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1 text-justify">
+<h2 id="_integrating_with_external_systems"><a class="anchor" href="#_integrating_with_external_systems"></a>Integrating with External Systems</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+Wholeness is not achieved by cutting off a portion of one&#8217;s being, but by integration of the contraries.
+</blockquote>
+<div class="attribution">
+&#8212; Carl Jung
+</div>
+</div>
+<div class="paragraph">
+<p>Thus far, we have used DDD to implement a robust core for our application. However, most solutions (by extension&#8201;&#8212;&#8201;bounded contexts) usually have both upstream and downstream dependencies which change at a pace that is different from these core components. To maintain both agility, reliability and enable loose coupling, it is important to integrate with peripheral systems in a manner that shields the core from everything else that surrounds it.</p>
+</div>
+<div class="paragraph">
+<p>In this chapter, we will look at the LC application processing solution and examine means by which we can integrate with other components in the ecosystem. You will learn to recognize relationship patterns between components. We will round off by looking at common implementation patterns when integrating with other applications.</p>
+</div>
+<div class="sect2">
+<h3 id="continuing-our-design-journey"><a class="anchor" href="#continuing-our-design-journey"></a>Continuing our design journey</h3>
+<div class="paragraph">
+<p>From our domain analysis in the earlier chapters, we have arrived at four bounded contexts for our application as depicted here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/lc-application.png" alt="lc application" width="529" height="533">
+</div>
+<div class="title">Figure 1. Relationship between bounded contexts</div>
+</div>
+<div class="paragraph">
+<p>Thus far, our focus has been on the implementation of the internals of the <strong>LC Application</strong> bounded context.
+While the LC Application bounded context is independent of the other bounded contexts, it is not completely isolated from them.
+For example, when processing an LC application, we need to perform merchandise and applicant checks which require interactions with the <strong>Compliance</strong> and <strong>Customer Onboarding</strong> bounded contexts respectively.
+This means that these bounded contexts have a relationship with each other.
+These relationships are driven by the nature of collaboration between the teams working on the respective bounded contexts.
+Let&#8217;s examine how these team dynamics influence integration mechanisms between bounded contexts in a way that continues to preserve their individual integrity.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="bounded-context-relationships"><a class="anchor" href="#bounded-context-relationships"></a>Bounded context relationships</h3>
+<div class="paragraph">
+<p>We need bounded contexts to be as independent as possible.
+However, this does not mean that bounded contexts are completely isolated from each other.
+Bounded contexts need to collaborate with others to provide business value.
+Whenever there is collaboration required between two bounded contexts, the nature of their relationship is not only influenced by their individual goals and priorities, but also by the prevailing organizational realities.
+In a high performing environment, it is fairly common to have a single team assume ownership of a bounded context.
+The relationships between the teams owning these bounded contexts, play a significant role in influencing the integration patterns employed to arrive at a solution.
+At a high level, there are two categories of relationships:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Symmetric</p>
+</li>
+<li>
+<p>Asymmetric</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at these relationship types in more detail.</p>
+</div>
+<div class="sect3">
+<h4 id="symmetric-relationship-patterns"><a class="anchor" href="#symmetric-relationship-patterns"></a>Symmetric relationship patterns</h4>
+<div class="paragraph">
+<p>Two teams can be said to have a symmetric relationship when they have an equal amount of influence in the decision-making process to arrive at a solution.
+Both teams are in a position to and indeed, do contribute more or less equally towards the outcome, as depicted here :</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/symmetric-relationship.png" alt="symmetric relationship">
+</div>
+<div class="title">Figure 2. Both teams have an equal say in influencing the solution</div>
+</div>
+<div class="paragraph">
+<p>There are three variations of symmetric relationships, each of which we outline in more detail in the following sub-sections.</p>
+</div>
+<div class="sect4">
+<h5 id="partnership"><a class="anchor" href="#partnership"></a>Partnership</h5>
+<div class="paragraph">
+<p>In a partnership, both teams integrate in an ad hoc manner.
+There are no fixed responsibilities assigned when needing complete integration work.
+Each team picks up work as and when needed without the need for any specific ceremony or fanfare.
+The nature of the integration is usually two-way with both teams exchanging solution artifacts as and when needed.
+Such relationships require extremely high degrees of collaboration and understanding of the work done by both teams, as depicted here :</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/partnership.png" alt="partnership">
+</div>
+<div class="title">Figure 3. There is an ad hoc, mutual dependency between teams in a partnership relationship</div>
+</div>
+<div class="sect5">
+<h6 id="example"><a class="anchor" href="#example"></a>Example</h6>
+<div class="paragraph">
+<p>A web front-end team working in close collaboration with the APIs team building the <a href="https://philcalcado.com/2015/09/18/the_back_end_for_front_end_pattern_bff.html">BFF</a>s for the front-end.
+The BFF team creates experience APIs meant to be used exclusively by the front-end.
+To fulfill any functionality, the front-end team requires capabilities to be exposed by the APIs team.
+On the other hand, the APIs team is dependent on the front-end team to provide advice on what capabilities to build and the order in which to build them.
+Both teams freely make use of each other&#8217;s domain models (for example, the same set of request and response objects that define the API) to implement functionality.
+Such reuse happens mostly arbitrarily and when API changes happen, the both teams coordinate changes to keep things working.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use"><a class="anchor" href="#when-to-use"></a>When to use</h6>
+<div class="paragraph">
+<p>Partnership between teams require high levels of collaboration, trust and understanding.
+Teams tend to use this when team boundaries are informal.
+It also helps if these teams are co-located and/or have a significant working time overlap.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls"><a class="anchor" href="#potential-pitfalls"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>Partnership relationships between teams can lead to a situation where individual team responsibilities become very unclear leading the solution towards the dreaded <em><a href="#_big_ball_of_mud">big ball of mud</a></em>.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="shared-kernel"><a class="anchor" href="#shared-kernel"></a>Shared kernel</h5>
+<div class="paragraph">
+<p>Unlike in a partnership, when using a shared kernel, teams have a clear understanding of the solution artifacts and models they choose to share between themselves.
+Both teams take equal responsibility in the upkeep of these shared artifacts.</p>
+</div>
+<div class="sect5">
+<h6 id="example-2"><a class="anchor" href="#example-2"></a>Example</h6>
+<div class="paragraph">
+<p>The <em>LC Application Processing</em> and <em>Customer Onboarding</em> teams in our LC application may choose to use a common model to represent the <code>CustomerCreditValidatedEvent</code>.
+Any enhancements or changes to the event schema can affect both teams.
+The responsibility to make any changes is owned by both teams.
+Intentionally, these teams do not share anything beyond this mutually agreed upon models and artifacts.  Here is the representation of shared kernel relationships in teams.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/shared-kernel.png" alt="shared kernel">
+</div>
+<div class="title">Figure 4. Teams have an explicit understanding of shared models</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-2"><a class="anchor" href="#when-to-use-2"></a>When to use</h6>
+<div class="paragraph">
+<p>The shared kernel form of collaboration works well if shared artifacts are required to be consumed in an identical fashion in both contexts.
+Furthermore, it is attractive for multiple teams to coordinate and continue sharing, as opposed to duplicating identical models in both contexts.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-2"><a class="anchor" href="#potential-pitfalls-2"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>Changes made to the shared kernel affect both bounded contexts.
+This means that any change made to the shared kernel needs to remain compatible for both teams.
+Needless to say, as the number of teams using the shared kernel increases, the cost of coordination goes up manifold.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="separate-ways"><a class="anchor" href="#separate-ways"></a>Separate ways</h5>
+<div class="paragraph">
+<p>When two teams choose to not share any artifacts or models between them, they go their own separate ways.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/separate-ways.png" alt="separate ways">
+</div>
+<div class="title">Figure 5. Teams go separate ways and not share anything between them</div>
+</div>
+<div class="sect5">
+<h6 id="example-3"><a class="anchor" href="#example-3"></a>Example</h6>
+<div class="paragraph">
+<p>The <em>LC Application Processing</em> and the <em>Customer Onboarding</em> teams may start with sharing the same build/deployment scripts for their services.
+Over a period of time, deployment requirements may diverge to a point where the shared cost of maintaining these scripts becomes prohibitively expensive, causing these teams to fork their deployments to regain independence from the other team.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-3"><a class="anchor" href="#when-to-use-3"></a>When to use</h6>
+<div class="paragraph">
+<p>In some cases, two teams may be unable to collaborate for a variety of reasons, ranging from a drift in individual team requirements to organizational politics.
+Whatever the case may be, these teams may decide that the cost of collaboration is too high, resulting in them going their own separate ways.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-3"><a class="anchor" href="#potential-pitfalls-3"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>Choosing to go separate ways may result in duplicate work across affected bounded contexts.
+When working in bounded contexts that map to the core subdomains, this may prove counter-productive as it could lead to inconsistent behaviors unintentionally.</p>
+</div>
+<div class="paragraph">
+<p>It is possible to transition from one relationship type to another over a period of time.
+In our experience, transitioning from any one of these relationships may not be straightforward.
+In cases where requirements are relatively clear at the outset, it may be easier to start with a <em>shared kernel</em>.
+On the contrary, if requirements are unclear, it may be prudent to start either with a loose <em>partnership</em> or go <em>separate ways</em> until requirements become clear.
+In any of these scenarios, it is important to keep evaluating the nature of the relationship and transition to a more appropriate type based on our enhanced understanding of the requirements and/or the relationship itself.</p>
+</div>
+<div class="paragraph">
+<p>In each of the relationships characterized above, the teams involved have a more or less equal say in how the relationship evolved and the resulting outcomes.
+However, this may not always be the case.
+Let&#8217;s look at examples of cases where one team may have a clear upper hand in terms of how the relationship evolves.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="asymmetric-relationship-patterns"><a class="anchor" href="#asymmetric-relationship-patterns"></a>Asymmetric relationship patterns</h4>
+<div class="paragraph">
+<p>Two teams can be said to have an asymmetric relationship when one of the teams has a stronger influence in the decision-making process to arrive at a solution.
+In other words, there is a clear customer-supplier (or upstream-downstream) relationship where either the customer or the supplier plays a dominant role that affects solution design approaches.
+It is also likely that the customer and the supplier do not share common goals.  Here is the representation of an asymmetric relationship between customer and supplier.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/asymmetric-relationship.png" alt="asymmetric relationship">
+</div>
+<div class="title">Figure 6. One of the teams has a dominant say in influencing the solution</div>
+</div>
+<div class="paragraph">
+<p>There are at least three solution patterns when teams are in an asymmetric relationship, each of which we outline in more detail in the following sub-sections.</p>
+</div>
+<div class="sect4">
+<h5 id="_conformist"><a class="anchor" href="#_conformist"></a>Conformist (CF)</h5>
+<div class="paragraph">
+<p>It is not unusual for the side playing the supplier role to have a dominant say in how the relationship with one or more customers is implemented.
+Furthermore, the customer may simply choose to conform with the supplier-provided solution as is, making it an integral part of their own solution.
+In other words, the supplier provides a set of models and the customer uses those same models to build their solution.
+In this case, the customer is termed to be a <em>conformist</em>.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/conformist.png" alt="conformist">
+</div>
+<div class="title">Figure 7. Customer accepts dependency on supplier model</div>
+</div>
+<div class="sect5">
+<h6 id="example-4"><a class="anchor" href="#example-4"></a>Example</h6>
+<div class="paragraph">
+<p>When building a solution to validate United States postal addresses of LC applicants, we chose to conform to the <a href="https://www.usps.com/business/web-tools-apis/">USPS Web Tools</a> address validation API schema.
+Given that the business started with just US-based applicants, this made sense.
+This means that any references to the address model in our bounded contexts mimic the schema prescribed by the USPS.
+This further means that we will need to keep up with changes that occur in the USPS API as and when they occur (regardless of whether that change is needed for our own functionality).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-4"><a class="anchor" href="#when-to-use-4"></a>When to use</h6>
+<div class="paragraph">
+<p>Being a conformist is not necessarily a negative thing.
+The supplier&#8217;s models may be a well accepted industry standard, or they may simply be good enough for our needs.
+It may also be that the team may not have the necessary skills, motivation or immediate needs to do something different from what the supplier has provided.
+This approach also enables teams to make quick progress, leveraging work mostly done by other experts.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-4"><a class="anchor" href="#potential-pitfalls-4"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>An overuse of the conformist pattern may dilute the ubiquitous language of our own bounded contexts, resulting in a situation where there is no clear separation between the supplier and customer concepts.
+It may also be that concepts that are core to the supplier&#8217;s context leaks into our own, despite those concepts carrying little to no meaning in our context.
+This may result in these bounded contexts being very tightly coupled with each other.
+And if a need arises to switch to another supplier or support multiple suppliers, the cost of change may be prohibitively expensive.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_anti_corruption_layer_acl"><a class="anchor" href="#_anti_corruption_layer_acl"></a>Anti-corruption layer (ACL)</h5>
+<div class="paragraph">
+<p>There may be scenarios where a customer may need to collaborate with the supplier, but may want to shield itself from the supplier&#8217;s ubiquitous language and models.
+In such cases, it may be prudent to redefine these conflicting models in the customer&#8217;s own ubiquitous language using a translation layer at the time of integration, also known as an <em>anti-corruption layer</em> (ACL).  This is depicted in the following figure :</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/anti-corruption-layer.png" alt="anti corruption layer">
+</div>
+<div class="title">Figure 8. Customer wants to protect itself from supplier models</div>
+</div>
+<div class="sect5">
+<h6 id="example-5"><a class="anchor" href="#example-5"></a>Example</h6>
+<div class="paragraph">
+<p>In the address validation example referenced in the <a href="#_conformist">Conformist</a> section, the <em>LC Application Processing</em> team may need to support Canadian applicants as well.
+In such a case, being a conformist to a system that supports only US addresses may prove restrictive and even confusing.
+For example, the US <em>state</em> is analogous to a <em>province</em> in Canada.
+Similarly, <em>zip code</em> in the US is referred to <em>postal code</em> in Canada.
+In addition, US zip codes are numeric whereas Canadian postal codes are alphanumeric.
+Most importantly, we currently do not have the notion of a <em>country code</em> in our address model, but now we will need to introduce this concept to differentiate addresses within the respective countries.
+Let&#8217;s look at the address models from the respective countries here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/acl-example.png" alt="acl example">
+</div>
+<div class="title">Figure 9. Address Models of different countries</div>
+</div>
+<div class="paragraph">
+<p>While we initially conformed to the USPS model, we have now evolved to support more countries.
+For example, <em>region</em> is used to represent the concept of <em>state</em>/<em>province</em>.
+Also, we have introduced the <em>country</em> value object, which was missing earlier.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-5"><a class="anchor" href="#when-to-use-5"></a>When to use</h6>
+<div class="paragraph">
+<p>Anti-corruption layers come in handy when the customer models are part of a core domain.
+The ACL shields the customer from changes in the supplier&#8217;s models and can help produce more loosely coupled integrations.
+It may also be necessary when we are looking to integrate similar concepts from multiple suppliers.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-5"><a class="anchor" href="#potential-pitfalls-5"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>Using an anti-corruption layer may be tempting in a lot of cases.
+However, it is less beneficial when the concepts being integrated don&#8217;t often change, or are defined by a well-known authority.
+Using an ACL with a custom language may only cause more confusion.
+Creating an ACL usually requires additional translations and thereby may increase the overall complexity of the customer&#8217;s bounded context and may be considered premature optimization.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_open_host_service_ohs"><a class="anchor" href="#_open_host_service_ohs"></a>Open host service (OHS)</h5>
+<div class="paragraph">
+<p>Unlike the conformist and the anti-corruption layer, where customers do not have a formal means to interface with the supplier, with the open host service, the supplier defines a clear interface to interact with its customers.
+This interface may be made available in the form of a well-known published language (for example, a REST interface or a client SDK):</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/open-host-service.png" alt="open host service">
+</div>
+<div class="title">Figure 10. Open host service (OHS) using a published language (PL).</div>
+</div>
+<div class="sect5">
+<h6 id="example-6"><a class="anchor" href="#example-6"></a>Example</h6>
+<div class="paragraph">
+<p>The LC Application Processing bounded context can expose an HTTP interface for each of its commands as shown here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="console"># Start a new LC application
+curl POST /applications/start \
+        -d '{&quot;applicant-id&quot;: &quot;8ed2d2fe&quot;, &quot;clientReference&quot;: &quot;Test LC&quot;}' \
+        -H 'content-type:application/vnd.lc-application.v2+json'
+
+# Change the amount on an existing application
+curl POST /applications/ac130002/change-amount \
+        -d '{&quot;amount&quot;: 100, &quot;currency&quot;: &quot;USD&quot;}' \
+        -H 'content-type:application/vnd.lc-application.v2+json'
+
+# Other commands omitted for brevity</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As an augment to the HTTP interface shown here, we may even provide a client SDK in some of the more popular languages used by our customers.
+This helps hide more implementation details such the MIME type and version from customers.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-6"><a class="anchor" href="#when-to-use-6"></a>When to use</h6>
+<div class="paragraph">
+<p>When the supplier wants to hide its internal models (ubiquitous language), making an open host service enables the supplier to evolve while providing a stable interface to its customers.
+In a sense, the open-host service pattern is a reversal of the anti-corruption layer pattern: instead of the customer, the supplier implements the translation of its internal model.
+Also, the supplier can consider providing an open host service when it is interested in providing a richer user experience for its customers.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-6"><a class="anchor" href="#potential-pitfalls-6"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>While suppliers may have good intentions by providing an open host service for its customers, it may result in increased implementation complexity (for example, there may be a need to support multiple versions of an API, or client SDKs in multiple languages).
+If the open host service does not take into account common usage patterns of its customers, it may result in a poor customer usability and also in degraded performance for the supplier.</p>
+</div>
+<div class="paragraph">
+<p>It is important to note that the conformist and the anti-corruption layer are patterns that customers implement, whereas the open host service is a supplier-side pattern.
+For example, the following scenario with the supplier providing an <em>open host service</em> and one customer is a <em>conformist</em> while another has an <em>anti-corruption layer</em>, can be true as depicted here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/asymmetric-multiple-customers.png" alt="asymmetric multiple customers">
+</div>
+<div class="title">Figure 11. Asymmetric relationships with multiple customers.</div>
+</div>
+<div class="paragraph">
+<p>Now that we have seen the various ways in which bounded contexts can integrate with each other, here is one possible implementation for our LC application depicted in the form of a context map:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/bounded-context-relationships/lc-application-context-map.png" alt="lc application context map">
+</div>
+<div class="title">Figure 12. Simplified context map for the LC application.</div>
+</div>
+<div class="paragraph">
+<p>Thus far we have examined the various ways in which inter-team dynamics influence integration mechanisms.
+While having clarity at the conceptual level helps, let&#8217;s see how these relationships manifest themselves at the implementation level.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implementation-patterns"><a class="anchor" href="#implementation-patterns"></a>Implementation patterns</h3>
+<div class="paragraph">
+<p>We have looked integration between bounded contexts at a design level, but these concepts need to be translated into code.
+There are three broad categories that can be employed when integrating two bounded contexts:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Data-based</p>
+</li>
+<li>
+<p>Code-based</p>
+</li>
+<li>
+<p>API-based</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at each method in more detail now.</p>
+</div>
+<div class="sect3">
+<h4 id="data-based"><a class="anchor" href="#data-based"></a>Data-based</h4>
+<div class="paragraph">
+<p>In this style of integration, the bounded contexts in question share data between each other. If the relationship is symmetric, the teams owning these bounded contexts may choose to share entire databases with free access to both read, write and change underlying structures. Whereas in an asymmetric relationship, the supplier may constrain the scope of access, based on the type of relationship.</p>
+</div>
+<div class="sect4">
+<h5 id="shared-database"><a class="anchor" href="#shared-database"></a>Shared database</h5>
+<div class="paragraph">
+<p>The simplest form of data integration is the use of a shared database. In this style of integration, all participating bounded contexts have unrestricted access to the schemas and the underlying data as shown here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/integration-patterns/symmetric-shared-data.png" alt="symmetric shared data">
+</div>
+<div class="title">Figure 13. Integration using a shared database</div>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-7"><a class="anchor" href="#when-to-use-7"></a>When to use</h6>
+<div class="paragraph">
+<p>The shared database presents a very low barrier to entry for teams looking to quickly enable new or enhance existing functionality by providing ready access to data for read and/or write use-cases. More importantly, it also allows the use of local database transactions, which usually provides strong consistency, lower complexity and better performance (especially when working with relational databases).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-7"><a class="anchor" href="#potential-pitfalls-7"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>However, this symmetric integration style where multiple teams have shared ownership is usually frowned upon because it often leads to a situation where there is no clear ownership. Furthermore, the shared databases can become a source of tight coupling, accelerating the path towards the dreaded <em>big ball of mud</em>. Additionally, users of the shared database can suffer from the <em>noisy neighbor</em> effect where one co-tenant monopolizing resources adversely affects all other tenants. For these reasons, teams will be well advised to choose this style of integration sparingly.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="replicated-data"><a class="anchor" href="#replicated-data"></a>Replicated data</h5>
+<div class="paragraph">
+<p>In the case of asymmetric relationships, suppliers may be unwilling to provide direct access to their data. However, they may choose to integrate with customers using a mechanism based on data sharing. An alternate form of integration is to provide a copy of the data required by consumers. There are many variations on how this can be implemented, we depict the more common ways here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/integration-patterns/asymmetric-shared-data.png" alt="asymmetric shared data">
+</div>
+<div class="title">Figure 14. Integration using data replication.</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Database views</strong>: In this form, the consumer gets or is provided access to a subset of the data using query-based or materialized views. In either case, the customer usually has read-only access to the data and both supplier and customer continue to share the same physical resources (usually the DB engine).</p>
+</li>
+<li>
+<p><strong>Full read replica</strong>: In this form, the customer gets access to a read replica of the supplier&#8217;s entire database, usually on physically disparate infrastructure.</p>
+</li>
+<li>
+<p><strong>Partial read replica</strong>: In this form, the customer gets access to a read replica of a subset of the supplier&#8217;s database, again on physically disparate infrastructure.</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-8"><a class="anchor" href="#when-to-use-8"></a>When to use</h6>
+<div class="paragraph">
+<p>This style of integration may be required when there is an asymmetric relationship between the supplier and the customer. Like the shared database, this integration style usually requires less upfront effort to integrate. This is also apt when suppliers intend to provide read-only access to a subset of their data. It may also suffice to use data replication when customers only require to read a subset of the supplier&#8217;s data.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-8"><a class="anchor" href="#potential-pitfalls-8"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>If we choose to use database views, we may continue to suffer from the noisy neighbor effect. On the other hand, if we choose to create physically disparate replicas, we will need to incur the cost of additional operational complexity. More importantly, the consumers remain tightly coupled to the supplier&#8217;s domain models and ubiquitous language.</p>
+</div>
+<div class="paragraph">
+<p>Next, let&#8217;s look at some ways to make the most of data-based integrations.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="increasing-effectiveness"><a class="anchor" href="#increasing-effectiveness"></a>Increasing effectiveness</h5>
+<div class="paragraph">
+<p>When sharing data, the schema (the structure of the database) acts as a means to enforce contracts, especially when using databases that require specifying a formal structure (for example, relational databases). When multiple parties are involved, managing the schema can become a challenge.</p>
+</div>
+<div class="paragraph">
+<p>To mitigate undesirable changes, teams sharing data may want to consider the use of a schema migration tool. Relational databases work well with tools like <a href="https://www.liquibase.org/">liquibase</a><sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> or <a href="https://flywaydb.org/">flyway</a><sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>. When working with databases that do not formally enforce a schema, it may be best to avoid employing this style of integration, especially when working in  symmetric relationships where ownership is unclear.</p>
+</div>
+<div class="paragraph">
+<p>In any case, if using one of the shared data styles of integration is unavoidable, teams may want to strongly consider employing one or more techniques mentioned in <a href="https://databaserefactoring.com/">refactoring databases</a> to make it more manageable.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="code-based"><a class="anchor" href="#code-based"></a>Code-based</h4>
+<div class="paragraph">
+<p>In this style of integration, teams coordinate by sharing code artifacts, either directly in the form of source code and/or binaries. At a high level, there are two forms:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sharing source code</p>
+</li>
+<li>
+<p>Sharing binaries</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We describe each of these here:</p>
+</div>
+<div class="sect4">
+<h5 id="sharing-source-code"><a class="anchor" href="#sharing-source-code"></a>Sharing source code</h5>
+<div class="paragraph">
+<p>A fairly common practice within organizations is to share source code with the objective of promoting reuse and standardization. This may include utilities (like logging, authentication, etc.), build/deployment scripts, data transfer objects, etc. In other words, any piece of source code where the cost of duplication is seen to be higher than reuse.</p>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-9"><a class="anchor" href="#when-to-use-9"></a>When to use</h6>
+<div class="paragraph">
+<p>Depending on the relationship type (symmetric/asymmetric), teams sharing code may have varied levels of influence in how the shared artifacts evolve. This works well in a symmetric relationship, both teams are empowered to make changes compatible with each other. Similarly, in an asymmetric relationship, the supplier may accept changes from customers, while retaining ownership and control of the shared artifacts. This also tends to work well in case of non-core, infrequently changing code artifacts. Sharing source code also enables higher levels of transparency and visibility into the internals of the shared artifacts (case in point - open source software).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-9"><a class="anchor" href="#potential-pitfalls-9"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>Sharing code artifacts means that individual teams take on responsibility to make sure that the process of converting source code into binary executables is uniform and compatible with requirements for all parties. This may include code conventions, static quality checks, tests (presence or lack thereof), compilation/build flags, versioning, and so on. When a relatively large number of teams are involved, maintaining this form of compatibility may become burdensome.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="sharing-binary-artifacts"><a class="anchor" href="#sharing-binary-artifacts"></a>Sharing binary artifacts</h5>
+<div class="paragraph">
+<p>Another relatively common practice is to share artifacts at the binary level. In this scenario, the consumers may or may not have direct access to source code artifacts. Examples include third-party libraries, client SDKs, API documentation, and so on. This form of integration is fairly common when the relationship between the coordinating parties is asymmetric. The supplier of the library has a clear ownership of maintaining the lifecycle of the shared artifacts.</p>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-10"><a class="anchor" href="#when-to-use-10"></a>When to use</h6>
+<div class="paragraph">
+<p>Sharing just binary artifacts may be necessary when the supplier is unable/unwilling to share source artifacts, possibly because they may be proprietary and/or part of the supplier&#8217;s intellectual property. Because the supplier takes ownership of the <em>build</em> process, it behooves the supplier to produce artifacts that are compatible with most potential consumers. Hence, this works well when the supplier is willing to do that. On the other hand, it requires that the customer place high levels of <a href="https://www.thoughtworks.com/en-us/insights/podcasts/technology-podcasts/securing-software-supply-chain">trust</a><sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> in the supplier&#8217;s <a href="https://blog.sonatype.com/software-supply-chain-a-definition-and-introductory-guide">software supply chain</a><sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> when producing these artifacts.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-10"><a class="anchor" href="#potential-pitfalls-10"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>Integration through the use of binary artifact sharing reduces the visibility into the build process of the shared artifacts for the consumers. If consumers rely on slow-moving suppliers, this can become untenable. For example, if a critical security bug is discovered in the shared binary, the consumer is solely reliant on the supplier to remediate. This can be a huge risk if such dependencies are in critical, business-differentiating aspects of the solution (especially in the core subdomain). This risk can be exacerbated without the use of appropriate <a href="#_anti_corruption_layer_acl">anti-corruption layers</a> (ACLs) and/or service level agreements (SLAs).</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_increasing_effectiveness_code_based"><a class="anchor" href="#_increasing_effectiveness_code_based"></a>Increasing effectiveness</h5>
+<div class="paragraph">
+<p>When sharing code artifacts, it becomes a lot more important to be explicit in how changes are made while continuing to maintain high levels of quality&#8201;&#8212;&#8201;especially when multiple teams are involved. Let&#8217;s examine some of these techniques in more detail:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Static analysis</strong>: This can be as simple as adhering to a set of coding standards using a tool like <a href="https://checkstyle.sourceforge.io/">checkstyle</a>. More importantly, these tools can be used to conform to a set of naming conventions to allow the firmer use of the ubiquitous language throughout the codebase. In addition, tools like <a href="https://spotbugs.github.io/">spotbugs</a>, <a href="https://pmd.github.io/">PMD/CPD</a> can be used to statically analyze code for the presence of bugs and duplicate code.</p>
+</li>
+<li>
+<p><strong>Code architecture tests</strong>: While static inspection tools are effective at operating at the level of a single compilation unit, runtime inspection can take this one level further to identify package cycles, dependency checks, inheritance trees, etc. to apply lightweight architecture governance. The use of tools like <a href="https://github.com/clarkware/jdepend">JDepend</a> and <a href="https://www.archunit.org/">ArchUnit</a> can help here.</p>
+</li>
+<li>
+<p><strong>Unit tests</strong>: When working with shared codebases, team members are looking to make changes in a safe and reliable manner. The presence of a comprehensive suite of fast-running unit tests can go a long way to wards increasing confidence. We strongly recommend employing test-driven design to further maximize creating a codebase that is well-designed and one that enables easier refactoring.</p>
+</li>
+<li>
+<p><strong>Code reviews</strong>: While automation can go a long way, augmenting the process where a human reviews changes can be highly effective for multiple reasons. This can take the form of offline reviews (using pull requests) or active peer reviews (using paired programming). All of these techniques serve to enhance collective understanding, thereby reducing risk when changes are made.</p>
+</li>
+<li>
+<p><strong>Documentation</strong>: Needless to say, well-structured documentation can be invaluable when making contributions and also when consuming binary code artifacts. Teams will be well advised to proliferate the use of the ubiquitous language by striving to write self-documenting code all throughout to maximize benefits derived.</p>
+</li>
+<li>
+<p><strong>Dependency management</strong>: When sharing binary code artifacts, managing dependencies can become fairly complicated due to having too many dependencies, long dependency chains, conflicting/cyclic dependencies, and so on. Teams should strive to reduce afferent (incoming) coupling as much as possible to mitigate the problems described above.</p>
+</li>
+<li>
+<p><strong>Versioning</strong>: In addition to minimizing the amount of afferent coupling, using an explicit versioning strategy can go a long way towards making dependency management easier. We strongly recommend considering the use of a technique like <a href="https://semver.org/">semantic versioning</a> for shared code artifacts.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ipc-based"><a class="anchor" href="#ipc-based"></a>IPC-based</h4>
+<div class="paragraph">
+<p>In this style of integration, the bounded contexts exchange messages using some form of inter-process communication (IPC) to interact with each other. This may take the form of synchronous or asynchronous communication.</p>
+</div>
+<div class="sect4">
+<h5 id="synchronous-messaging"><a class="anchor" href="#synchronous-messaging"></a>Synchronous messaging</h5>
+<div class="paragraph">
+<p>Synchronous messaging is a style of communication where the sender of the request waits for a response from the receiver, which implies that the sender and the receiver need to be active for this style to work. Usually, this form of communication is point-to-point. HTTP is one of the commonly used protocols for this style of communication. A visual representation of this form of communication is shown here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/integration-patterns/synchronous-messaging.png" alt="synchronous messaging">
+</div>
+<div class="title">Figure 15. Synchronous messaging</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Please take a look at the HTTP APIs for the commands used during LC application processing included with the code examples for this chapter.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-11"><a class="anchor" href="#when-to-use-11"></a>When to use</h6>
+<div class="paragraph">
+<p>This form of integration is used when the customer is interested in the supplier&#8217;s response to the request. The response is then used to determine whether the request was successful or not. Given that the customer needs to wait for the response, it is advisable to use this style of messaging for low latency operations. This form of integration is popular when exposing public APIs over the internet (for example, <a href="https://docs.github.com/en/rest">Github&#8217;s REST API</a><sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup>).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-11"><a class="anchor" href="#potential-pitfalls-11"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>When using synchronous messaging, the customer&#8217;s ability to scale is heavily dependent on the supplier to satisfy the customer&#8217;s requirements. On the flip side, customers making requests at too high a rate may compromise the supplier&#8217;s ability to serve customers in a predictable manner. If there is a chain of synchronous messaging, the probability of cascading failure becomes much higher.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="asynchronous-messaging"><a class="anchor" href="#asynchronous-messaging"></a>Asynchronous messaging</h5>
+<div class="paragraph">
+<p>Asynchronous messaging is a style of communication where the sender does not wait for an explicit response from the receiver.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We are using the terms sender and receiver, instead of customer and supplier because they both can play either role of sender or receiver.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is typically achieved by introducing an intermediary in the form of a message channel. The presence of the intermediary enables both one-to-one and one-to-many modes of communication. Typically, the intermediary can take the form of a shared filesystem, database or a queueing system.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/integration-patterns/asynchronous-messaging.png" alt="asynchronous messaging">
+</div>
+<div class="title">Figure 16. Asynchronous messaging</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Please take a look at the event APIs for the commands used during LC application processing included with the code examples for this chapter.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="when-to-use-12"><a class="anchor" href="#when-to-use-12"></a>When to use</h6>
+<div class="paragraph">
+<p>This form of integration is used when the sender does not care about receiving an <strong>immediate</strong> response from the receiver(s), resulting in the respective systems becoming a lot more decoupled from each other. This further enables these systems to scale independently. This also makes it possible to have the same message to be processed by multiple receivers. For example, in our LC application processing system, the <code>LCApplicationSubmittedEvent</code> is received by both the <em>Compliance</em> and <em>Customer Onboarding</em> systems.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="potential-pitfalls-12"><a class="anchor" href="#potential-pitfalls-12"></a>Potential pitfalls</h6>
+<div class="paragraph">
+<p>The introduction of the intermediary component adds complexity to the overall solution. The <a href="#_ignoring_non_functional_requirements">non-functional</a> characteristics of the intermediary can have a profound effect on the resilience characteristics of the system as a whole. It can also be tempting to add processing logic to the intermediary, thereby coupling the overall system very tightly to this component. To ensure reliable communication between the sender and the receiver, the intermediary may have to support a variety of enhanced capabilities (such as ordering, producer flow control, durability, transactions, and so on.)</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="increasing-effectiveness-2"><a class="anchor" href="#increasing-effectiveness-2"></a>Increasing effectiveness</h5>
+<div class="paragraph">
+<p>When implementing integration using some form of IPC, a lot of the techniques discussed in the <a href="#_increasing_effectiveness_code_based">code-based implementation</a> patterns section continue to apply. As discussed earlier, API documentation plays a significant role in reducing friction for customers. In addition, here are a few more techniques that apply specifically when using IPC-based integration. We outline some of these techniques here:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Typed protocols</strong>: When working with this form of integration, it is important to minimize the amount of time taken to gather feedback on structural validations. This is especially important given that the supplier and the customer may be in a constant state of independent evolution. The use of typed protocols such as protocol buffers, Avro, Netflix&#8217;s Falcor, GraphQL, and so on. can make it easier for customers to interact with suppliers while maintaining a lightweight mechanism to validate correctness of requests.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+The operative word here is <strong>lightweight</strong>. It is pertinent to note that we are not advising against the use of JSON-based HTTP APIs (typically advertised as being RESTful) which do not enforce the use of an explicit schema. Neither are we promoting the use of (arguably) legacy protocols like SOAP, WSDL, CORBA, etc. Each of these, while being well-meaning suffered from being fairly heavyweight.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p><strong>Self discovery</strong>: As outlined above, when working with a IPC-based integration mechanism, we should look to reduce the barrier to entry. When working with RESTful APIs, the use of <a href="https://restfulapi.net/hateoas">HATEOAS</a><sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup>, although difficult for suppliers to implement, can make it easier for customers to understand and consume APIs. In addition, making use of a service registry and/or a schema registry can further reduce consumption friction.</p>
+</li>
+<li>
+<p><strong>Contract tests</strong>: In the spirit of failing fast and shifting left, the practice of contract testing and <a href="https://martinfowler.com/articles/consumerDrivenContracts.html">consumer-driven contracts</a> can further increase the quality and speed of integration. Tools such as <a href="https://pact.io/">Pact</a><sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup> and <a href="https://spring.io/projects/spring-cloud-contract">Spring Cloud Contract</a><sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> make the adoption of these practices relatively simple.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Thus far, we discussed implementation patterns, broadly categorized into data-based, code-based and IPC-based integrations.  Hopefully, this gives you a good idea to consciously choose the appropriate approach considering the benefits and the caveats that they bring along with them.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="summary"><a class="anchor" href="#summary"></a>Summary</h3>
+<div class="paragraph">
+<p>In this chapter, we looked at the different types of bounded context relationships. We also examined common integration patterns that can be used when implementing these bounded context relationships.</p>
+</div>
+<div class="paragraph">
+<p>You have learned when specific techniques can be used, potential pitfalls and ideas on how to increase effectiveness when employing these methods.</p>
+</div>
+<div class="paragraph">
+<p>In the next chapter, we will explore means to distribute these bounded contexts into independently deployable components (in other words, employ a microservices-based architecture).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="questions"><a class="anchor" href="#questions"></a>Questions</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In your ecosystem, can you identify bounded context boundaries and the integration mechanism in use?</p>
+</li>
+<li>
+<p>Will you be able to draw a context map for your system?</p>
+</li>
+<li>
+<p>Will you recommend any changes to the existing styles of integration based on the learnings from this chapter?</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="further-reading"><a class="anchor" href="#further-reading"></a>Further reading</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 35.7142%;">
+<col style="width: 21.4285%;">
+<col style="width: 42.8573%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Title</th>
+<th class="tableblock halign-left valign-top">Author</th>
+<th class="tableblock halign-left valign-top">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integration database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Martin Fowler</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://martinfowler.com/bliki/IntegrationDatabase.html" class="bare">https://martinfowler.com/bliki/IntegrationDatabase.html</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REST APIs must be hypertext-driven</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Roy T. Fielding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven" class="bare">https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. <a href="https://www.liquibase.org/" class="bare">https://www.liquibase.org/</a>
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. <a href="https://flywaydb.org/" class="bare">https://flywaydb.org/</a>
+</div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. <a href="https://www.thoughtworks.com/en-us/insights/podcasts/technology-podcasts/securing-software-supply-chain" class="bare">https://www.thoughtworks.com/en-us/insights/podcasts/technology-podcasts/securing-software-supply-chain</a>
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. <a href="https://blog.sonatype.com/software-supply-chain-a-definition-and-introductory-guide" class="bare">https://blog.sonatype.com/software-supply-chain-a-definition-and-introductory-guide</a>
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. <a href="https://docs.github.com/en/rest" class="bare">https://docs.github.com/en/rest</a>
+</div>
+<div class="footnote" id="_footnotedef_6">
+<a href="#_footnoteref_6">6</a>. <a href="https://restfulapi.net/hateoas" class="bare">https://restfulapi.net/hateoas</a>
+</div>
+<div class="footnote" id="_footnotedef_7">
+<a href="#_footnoteref_7">7</a>. <a href="https://pact.io/" class="bare">https://pact.io/</a>
+</div>
+<div class="footnote" id="_footnotedef_8">
+<a href="#_footnoteref_8">8</a>. <a href="https://spring.io/projects/spring-cloud-contract" class="bare">https://spring.io/projects/spring-cloud-contract</a>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0-SNAPSHOT<br>
+Last updated 2022-05-01 18:48:20 UTC
+</div>
+</div>
+</body>
+</html>
