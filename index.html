@@ -448,7 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author2" class="author">Karthik Krishnan</span><br>
 <span id="email2" class="email"><a href="mailto:me@karthiks.in">me@karthiks.in</a></span><br>
 <span id="revnumber">version 1.0.0-SNAPSHOT,</span>
-<span id="revdate">May 28 2022 03:26 PM UTC</span>
+<span id="revdate">May 29 2022 02:46 PM UTC</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -743,7 +743,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#monitoring">12.1.1. Monitoring</a></li>
 <li><a href="#code-comments">12.1.2. Code comments</a></li>
 <li><a href="#logging">12.1.3. Logging</a></li>
-<li><a href="#tracing">12.1.4. Tracing</a></li>
+<li><a href="#distributed-tracing">12.1.4. Distributed tracing</a></li>
 </ul>
 </li>
 <li><a href="#security">12.2. Security</a></li>
@@ -11414,11 +11414,31 @@ For more information on logging best practices, please refer to this logging che
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Aggregating logs in one place, allows us to view diagnostic information from multiple applications. However, we still need to correlate this information when in the midst of a flow. Distributed tracing solutions can help with this. Let&#8217;s look at this next.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="tracing"><a class="anchor" href="#tracing"></a><a class="link" href="#tracing">12.1.4. Tracing</a></h4>
-
+<h4 id="distributed-tracing"><a class="anchor" href="#distributed-tracing"></a><a class="link" href="#distributed-tracing">12.1.4. Distributed tracing</a></h4>
+<div class="paragraph">
+<p>Imagine a situation where an applicant submitted an LC application through the UI. When all goes well, within a few milliseconds, the applicant should get a notification of successful submission as shown here:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/lc-submit-sequence.png" alt="lc submit sequence" width="583" height="503">
+</div>
+<div class="title">Figure 1- 121. Submit LC application flow</div>
+</div>
+<div class="paragraph">
+<p>Even in this simple example, there are several components involved, each of which produce logs of their own. When an engineer is looking to diagnose an issue, there is a need to correlate log entries from multiple components. In order to accomplish this, there is a need to introduce a correlation identifier as close to the start of the interaction and propagate it across component boundaries. Furthermore, log entries in each component need to carry this correlation identifier as they produce logs. Doing this will allow us to view log entries spanning process boundaries using the correlation identifier as a unifying thread. In technical terms, the entire flow is called a <strong><em>trace</em></strong>, and each segment within the flow is called a <strong><em>span</em></strong>. This process of instrumenting log entries with such information is termed <em>distributed tracing</em>.</p>
+</div>
+<div class="paragraph">
+<p>As is evident here, user flows may and usually span more than one bounded context. For this to work effectively, bounded contexts need to agree on propagating trace and span identifiers uniformly. Tools like <a href="https://spring.io/projects/spring-cloud-sleuth">spring cloud sleuth</a> and <a href="https://opentracing.io/">open tracing</a> can help simplify implementation for teams using disparate technology stacks.</p>
+</div>
+<div class="paragraph">
+<p>Fundamentally, distributed tracing visualizations can aid in diagnosing performance bottlenecks and chattiness between components. But what may not be obvious is the insights it can provide in gaining a richer understanding of how components interact in an end-to-end user journey. In a lot of ways, this can be thought of a near real-time context map visualization of your system, and how components are coupled with each other. From a DDD perspective, this can provide greater insights into re-evaluating bounded context boundaries if necessary. For this reason, we strongly recommend making it easy to set up and configure distributed tracing apparatus painlessly right from the outset.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -11854,7 +11874,7 @@ Everything fails all the time.
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2022-05-28 15:26:25 UTC
+Last updated 2022-05-29 14:46:00 UTC
 </div>
 </div>
 </body>
